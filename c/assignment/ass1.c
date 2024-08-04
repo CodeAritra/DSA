@@ -76,7 +76,7 @@ void deleteFromBeginning(int arr[], int *size)
     }
     (*size)--;
 
-    display(arr,*size);
+    display(arr, *size);
 }
 
 void deleteFromEnd(int arr[], int *size)
@@ -88,8 +88,7 @@ void deleteFromEnd(int arr[], int *size)
     }
     (*size)--;
 
-    display(arr,*size);
-
+    display(arr, *size);
 }
 
 void deleteFromPosition(int arr[], int *size, int position)
@@ -104,8 +103,7 @@ void deleteFromPosition(int arr[], int *size, int position)
         arr[i] = arr[i + 1];
     }
     (*size)--;
-    display(arr,*size);
-
+    display(arr, *size);
 }
 
 void replaceElement(int arr[], int size, int position, int newElement)
@@ -117,8 +115,7 @@ void replaceElement(int arr[], int size, int position, int newElement)
     }
     arr[position] = newElement;
 
-    display(arr,size);
-
+    display(arr, size);
 }
 
 int searchElement(int arr[], int size, int element)
@@ -155,6 +152,7 @@ int main()
         printf("6. Delete from a position\n");
         printf("7. Replace an element at a specific position\n");
         printf("8. Search for an element\n");
+        printf("9. Display the array element\n");
 
         scanf("%d", &choice);
 
@@ -208,10 +206,13 @@ int main()
                 printf("Element not found\n");
             }
             break;
+        case 9:
+            display(arr, size);
+            break;
         default:
             printf("Wrong choice");
         }
-    }
+    } 
 
     return 0;
 }

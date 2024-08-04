@@ -68,40 +68,67 @@ public:
     }
 };
 
-void heapify(int arr[], int size, int i)
-{
-    int largest = i;
-    int leftIndex = 2 * i;
-    int rightInxddex = 2 * i + 1;
+// void heapify(int arr[], int size, int i)
+// {
+//     int largest = i;
+//     int leftIndex = 2 * i;
+//     int rightInxddex = 2 * i + 1;
 
-    if (leftIndex <= size && arr[leftIndex] > arr[largest])
-    {
+//     if (leftIndex <= size && arr[leftIndex] > arr[largest])
+//     {
+//         largest = leftIndex;
+//     }
+
+//     if (rightInxddex <= size && arr[rightInxddex] > arr[largest])
+//     {
+//         largest = rightInxddex;
+//     }
+
+//     if (largest != i)
+//     {
+//         swap(arr[i], arr[largest]);
+//         heapify(arr, size, largest);
+//     }
+// }
+
+//  void heapSort(int arr[], int n)
+// {
+//     int size = n;
+//     while (size > 1)
+//     {
+//         swap(arr[size], arr[1]);
+//         size--;
+
+//         heapify(arr, size, 1);
+//     }
+// }
+
+void heapify(int arr[],int size,int i){
+    int largest = i;
+    int leftIndex = 2*i;
+    int rightIndex = 2*i+1;
+
+    if(leftIndex<=size && arr[leftIndex]>arr[largest]){
         largest = leftIndex;
     }
-
-    if (rightInxddex <= size && arr[rightInxddex] > arr[largest])
-    {
-        largest = rightInxddex;
+    if(rightIndex<=size && arr[rightIndex]>arr[largest]){
+        largest = rightIndex;
     }
-
-    if (largest != i)
-    {
-        swap(arr[i], arr[largest]);
-        heapify(arr, size, largest);
+    if(largest!=i){
+        swap(arr[i],arr[largest]);
+        heapify(arr,size,largest);
     }
 }
 
-void heapSort(int arr[], int n)
-{
-    int size = n;
-    while (size > 1)
-    {
-        swap(arr[size], arr[1]);
-        size--;
-
-        heapify(arr, size, 1);
+void heapSort(int arr[],int size){
+    int n = size;
+    while(n>1){
+        swap(arr[1],arr[n]);
+        n--;
+        heapify(arr,n,1);
     }
 }
+
 
 int main()
 {
