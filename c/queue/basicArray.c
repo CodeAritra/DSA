@@ -1,7 +1,7 @@
 #include <stdio.h>
 #define max 5
 
-typedef struct
+typedef struct queue
 {
     int arr[max];
     int front;
@@ -14,23 +14,9 @@ void createQueue(queue *q)
     q->rear = -1;
 }
 
-int isEmpty(queue *q)
-{
-    if (q->front == -1)
-        return 1;
-    return 0;
-}
-
-int isFull(queue *q)
-{
-    if (q->rear == max - 1)
-        return 1;
-    return 0;
-}
-
 void enqueue(queue *q, int val)
 {
-    if (isFull(q))
+    if (q->rear == max - 1)
     {
         printf("Queue full\n");
         return;
@@ -42,11 +28,12 @@ void enqueue(queue *q, int val)
 
 void dequeue(queue *q)
 {
-    if (isEmpty(q))
+    if (q->front == -1)
     {
         printf("Queue is empty\n");
         return;
     }
+    printf("Dequeued element : %d",q->arr[q->front]);
     q->front++;
     if (q->front > q->rear)
     {
@@ -54,18 +41,13 @@ void dequeue(queue *q)
     }
 }
 
-int peek(queue *q)
-{
-    if (isEmpty(q))
-    {
-        printf("Queue is empty\n");
-        return -1;
-    }
-    return q->arr[q->front];
-}
-
 void display(queue *q)
 {
+    if (q->front == -1)
+    {
+        printf("Queue is empty\n");
+        return;
+    }
     printf("Queue: ");
     for (int i = q->front; i <= q->rear; i++)
     {
@@ -79,24 +61,31 @@ int main()
     queue q;
     createQueue(&q);
 
-    enqueue(&q, 10);
-    enqueue(&q, 20);
-    enqueue(&q, 30);
-    enqueue(&q, 40);
-    enqueue(&q, 50);
+    int x = 1;
+    int ch,val;
 
-    display(&q);
-
-
-    dequeue(&q);
-    dequeue(&q);
-    dequeue(&q);
-    dequeue(&q);
-    dequeue(&q);
-
-    display(&q);
-
-    printf("Front element is: %d\n", peek(&q));
+    while(x){
+        printf("\n1. Enqueue\n2. Dequeue\n3. Display\n4. Exit\nEnter your choice : ");
+        scanf("%d",&ch);
+        switch(ch){
+            case 1:
+                printf("Enter the value : ");
+                scanf("%d",&val);
+                enqueue(&q,val);
+                break;
+            case 2:
+                dequeue(&q);
+                break;
+            case 3:
+                display(&q);
+                break;
+            case 4:
+                x = 0;
+                break;
+            default:
+                printf("Wrong Input");
+        }
+    }
 
     return 0;
 }
