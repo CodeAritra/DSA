@@ -1,128 +1,72 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include<stdio.h>
+#include<string.h>
+#define max 100
 
-typedef struct node
-{
-    int data;
-    struct node *next;
-} node;
+char infix[max];
+char postfix[max];
+int index11 = 0;
+char stack[max];
+int top = -1;
 
-node *createNode(int val)
-{
-    node *newNode = (node *)malloc(sizeof(node));
-    newNode->data = val;
-    newNode->next = NULL;
-    return newNode;
+int isEmpty(){
+    if(top == -1) return 1;
+    return 0;
 }
 
-node *insertAtBegining(node *head, int val)
-{
-    node *newnode = createNode(val);
-    if (head == NULL)
-        return newnode;
-    newnode->next = head;
-    head = newnode;
-    return head;
+void push(char data){
+    top++;
+    stack[top] = data;
 }
 
-node *insertAtEnd(node *head, int val)
-{
-    node *newnode = createNode(val);
-    if (head == NULL)
-        return newnode;
-    node *curr = head;
-    while (curr->next != NULL)
-    {
-        curr = curr->next;
-    }
-    curr->next = newnode;
-    return head;
+char pop(){
+    int ans = stack[top];
+    top--;
+    return ans;
 }
 
-node *insertAtPos(node *head, int val, int pos)
-{
-    node *newnode = createNode(val);
-    if (head == NULL)
-        return newnode;
-    node *curr = head;
-    for (int i = 1; i < pos - 1; i++)
-    {
-        curr = curr->next;
-    }
-    newnode->next = curr->next;
-    curr->next = newnode;
-    return head;
+int precedence(char ch){
+    if (ch=='^') return 3;
+    if(ch=='/' || ch=='*') return 2;
+    if(ch=='+' || ch=='-') return 1;
+    return 0;
 }
 
-node *deleteBegin(node *head)
-{
-    if (head == NULL)
-    {
-        printf("underflow");
-        return head;
-    }
-    node *temp = head->next;
-    free(head);
-    return temp;
+char associativity(char ch){
+    if(ch=='^') return 'R';
+    return 'L';
 }
 
-node *deleteEnd(node *head)
-{
-    if (head == NULL)
-    {
-        printf("underflow");
-        return head;
+void infixToPostfix(char str[]){
+    for(int i=0;i<strlen(str);i++){
+        char ch = str[i];
+        if((ch>='A'&&ch<='Z') || (ch>='a'&&ch<='z') || (ch>=0&&ch<=9)){
+            postfix[index11++] = ch;
+        }
+        else if(ch=='('){
+            push(ch);
+        }
+        else if(ch==')'){
+            while(!isEmpty() && stack[top]!='('){
+                postfix[index11++] = pop();
+            }
+            pop();
+        }
+        else{
+            while(!isEmpty() && (precedence(ch)<=precedence(stack[top])) && associativity(ch)=='L'){
+                postfix[index11++] = pop();
+            }
+            push(ch);
+        }
     }
-    node *curr = head;
-    while (curr->next->next != NULL)
-    {
-        curr = curr->next;
+    while(!isEmpty()){
+        postfix[index11++]=pop();
     }
-    node *temp = curr->next;
-    curr->next = NULL;
-    free(temp);
-    return head;
+    printf("%s",postfix);
 }
 
-node *deletePos(node *head, int pos)
-{
-    if (head == NULL)
-    {
-        printf("underflow");
-        return head;
-    }
-    node *curr = head;
-    for (int i = 1; i < pos - 1; i++)
-    {
-        curr = curr->next;
-    }
-    node *temp = curr->next;
-    curr->next = curr->next->next;
-    free(temp);
-    return head;
-}
-
-void printLL(node *head)
-{
-    node *curr = head;
-    while (curr != NULL)
-    {
-        printf("%d -> ", curr->data);
-        curr = curr->next;
-    }
-    printf("NULL\n");
-}
-
-int main()
-{
-    node *head = NULL;
-
-    int x = 1;
-    int ch;
-
-    while(x){
-        printf("\n1. Insert ata begin\n2. Insert at end\n3. Insert at any position\n4. Delete from begin\n5. Delete from end\n6. ")
-    }
+int main(){
+    gets(infix);
+    infixToPostfix(infix);
 
     return 0;
 }

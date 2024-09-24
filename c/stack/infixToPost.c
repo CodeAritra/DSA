@@ -1,6 +1,33 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#define max 100
+
+
+char stack[max];
+int top = -1;
+char result[100];
+int resultIndex = 0;
+
+int isFull(){
+    if (top == max-1) return 1;
+    return 0;
+}
+
+int isEmpty(){
+    if(top == -1) return 1;
+    return 0;
+}
+
+void push(char data){
+    stack[++top] = data;
+}
+
+char pop(){
+    int ans = stack[top];
+    top--;
+    return ans;
+}
 
 int precedence(char c)
 {
@@ -22,11 +49,6 @@ char associativity(char c)
 
 char infixToPostfix(char str[])
 {
-    char result[100];
-    char stack[100];
-    int stackIndex = -1;
-    int resultIndex = 0;
-
     for (int i = 0; i < strlen(str); i++)
     {
         char ch = str[i];
@@ -36,32 +58,32 @@ char infixToPostfix(char str[])
         }
         else if (ch == '(')
         {
-            stack[++stackIndex] = ch;
+            push(ch);
         }
         else if (ch == ')')
         {
-            while (stackIndex >= 0 && stack[stackIndex] != '(')
+            while (!isEmpty() && stack[top] != '(')
             {
-                result[resultIndex++] = stack[stackIndex--];
+                result[resultIndex++] = pop();
             }
-            stackIndex--;
+            pop();
         }
         else
         {
-            while (stackIndex >= 0 && (precedence(ch) <= precedence(stack[stackIndex])) && associativity(ch) == 'L')
+            while (!isEmpty() && (precedence(ch) <= precedence(stack[top])) && associativity(ch) == 'L')
             {
-                result[resultIndex++] = stack[stackIndex--];
+                result[resultIndex++] = pop();
             }
-           stack[++stackIndex] = ch;
+           push(ch);
         }
     }
 
-    while (stackIndex >= 0)
+    while (!isEmpty())
     {
-        result[resultIndex++] = stack[stackIndex--];
+        result[resultIndex++] = pop();
     }
 
-    result[resultIndex] = '\0';
+    // result[++resultIndex] = '\0';
     printf("%s\n", result);
 }
 

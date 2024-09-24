@@ -1,5 +1,5 @@
 #include <stdio.h>
-#define max 5
+#define max 3
 
 typedef struct queue
 {
@@ -18,7 +18,7 @@ void enqueue(queue *q, int val)
 {
     if (q->rear == max - 1)
     {
-        printf("Queue full\n");
+        printf("Overflow\n");
         return;
     }
     if (q->front == -1)
@@ -30,7 +30,7 @@ void dequeue(queue *q)
 {
     if (q->front == -1)
     {
-        printf("Queue is empty\n");
+        printf("Underflow\n");
         return;
     }
     printf("Dequeued element : %d",q->arr[q->front]);
@@ -45,7 +45,7 @@ void display(queue *q)
 {
     if (q->front == -1)
     {
-        printf("Queue is empty\n");
+        printf("Underflow\n");
         return;
     }
     printf("Queue: ");

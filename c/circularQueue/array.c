@@ -15,7 +15,7 @@ void createCQueue(cqueue *cq)
 }
 
 void cenqueue(cqueue *cq, int val)
-{
+{  
     if ((cq->rear + 1) % max == cq->front)
     {
         printf("Overflow\n");
