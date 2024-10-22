@@ -1,60 +1,74 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct node
-{
+struct Node {
     int data;
-    struct node *next;
-} node;
+    struct Node* next;
+};
 
-typedef struct
-{
-    node *top;
-} stack;
-
-int isEmpty(stack *s)
-{
-    return s->top == NULL;
+struct Node* createNode(int data) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    
+    newNode->data = data;
+    newNode->next = NULL;
+    return newNode;
 }
 
-void createStack(stack *s)
-{
-    s->top = NULL;
+int isEmpty(struct Node* top) {
+    return (top == NULL);
 }
 
-void push(stack *s, int val)
-{
-    struct node *newnode = (node *)malloc(sizeof(node));
-    newnode->data = val;
-    newnode->next = s->top;
-    s->top = newnode;
+struct Node* push(struct Node* top, int data) {
+    struct Node* newNode = createNode(data);
+    newNode->next = top;  
+    printf("%d pushed to the stack.\n", data);
+    return newNode;  
 }
 
-void pop(stack *s)
-{
-    if (isEmpty(s))
-    {
-        printf("Stack empty");
-        return;
+struct Node* pop(struct Node* top) {
+    if (isEmpty(top)) {
+        printf("Stack is empty. Cannot pop.\n");
+        return top;
     }
-    s->top = s->top->next;
+    struct Node* temp = top;
+    printf("%d popped from the stack.\n", top->data);
+    top = top->next;  
+    free(temp);  
+    return top;  
 }
 
-int peek(stack *s){
-    return s->top->data;
+int peek(struct Node* top) {
+    if (isEmpty(top)) {
+        printf("Stack is empty.\n");
+        return -1;
+    }
+    return top->data;
 }
 
-int main()
-{
-    stack s;
-    createStack(&s);
-    push(&s,5);
-    push(&s,6);
-    push(&s,7);
 
-    printf("%d",peek(&s));
-    pop(&s);
-    printf("%d",peek(&s));
+int main() {
+    struct Node* top = NULL; 
+
+    top = push(top, 10);
+    top = push(top, 20);
+    top = push(top, 30);
+
+
+    printf("Top element is: %d\n", peek(top));
+
+ 
+    top = pop(top);
+    top = pop(top);
+
+   
+    printf("Top element is: %d\n", peek(top));
+
+   
+    top = pop(top);
+
+   
+    if (isEmpty(top))
+        printf("Stack is empty now.\n");
 
     return 0;
 }
