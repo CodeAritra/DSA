@@ -3,27 +3,32 @@
 #include <stdlib.h>
 #define max 100
 
-
 char stack[max];
 int top = -1;
 char result[100];
 int resultIndex = 0;
 
-int isFull(){
-    if (top == max-1) return 1;
+int isFull()
+{
+    if (top == max - 1)
+        return 1;
     return 0;
 }
 
-int isEmpty(){
-    if(top == -1) return 1;
+int isEmpty()
+{
+    if (top == -1)
+        return 1;
     return 0;
 }
 
-void push(char data){
+void push(char data)
+{
     stack[++top] = data;
 }
 
-char pop(){
+char pop()
+{
     int ans = stack[top];
     top--;
     return ans;
@@ -74,7 +79,7 @@ char infixToPostfix(char str[])
             {
                 result[resultIndex++] = pop();
             }
-           push(ch);
+            push(ch);
         }
     }
 
@@ -89,10 +94,14 @@ char infixToPostfix(char str[])
 
 int main()
 {
-    char exp[] = "a+b*(c^d-e)^(f+g*h)-i";
+    char exp[max];
+    printf("Enter a string : ");
+    gets(exp);
 
+    printf("Postfix : ");
     infixToPostfix(exp);
     return 0;
 
-    //abcd^e-fgh*+^*+i-
+    // a+b*(c^d-e)^(f+g*h)-i
+    // abcd^e-fgh*+^*+i-
 }
