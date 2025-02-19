@@ -41,13 +41,10 @@ void evaluate(char *exp)
 {
     stack s;
     init(&s);
-    printf("Exp = ");
-    puts(exp);
 
     for (int i = 0; i < strlen(exp); i++)
     {
         char ch = exp[i];
-        printf("Ch = %c\n",ch);
         if (ch == ' ')
             continue;
 
