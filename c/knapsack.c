@@ -9,8 +9,8 @@ typedef struct
 
 int compare(const void *a, const void *b)
 {
-    double r1 = ((Item *)a)->value / (double)((Item *)a)->weight;
-    double r2 = ((Item *)b)->value / (double)((Item *)b)->weight;
+    double r1 = ((Item *)a)->value / ((Item *)a)->weight;
+    double r2 = ((Item *)b)->value / ((Item *)b)->weight;
 
     if (r1 > r2)
         return -1; // Sort in descending order
@@ -58,7 +58,7 @@ int main()
 
     printf("Enter the weight : ");
     scanf("%d", &w);
-    
+
     double maxValue = knapsack(items, w, n);
     printf("Max value in the knapsack %.2lf: ", maxValue);
 
